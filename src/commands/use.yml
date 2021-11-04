@@ -2,13 +2,13 @@ description: >
   This command configures Cachix to use the specified caches.
 
 parameters:
-  cache_name:
+  caches:
     type: string
     default: ""
     description: >
       Name of the Cachix cache to use.
 
-  extra_cache_names:
+  extra_caches:
     type: string
     default: ""
     description: >
@@ -17,7 +17,7 @@ parameters:
 steps:
   - run:
       environment:
-        PARAM_NAME: <<parameters.cache_name>>
-        PARAM_EXTRA_NAMES: <<parameters.extra_cache_names>>
+        PARAM_CACHE: <<parameters.caches>>
+        PARAM_EXTRA_CACHES: <<parameters.extra_caches>>
       name: "Use Cachix cache"
       command: <<include(scripts/cachix-use.sh)>>

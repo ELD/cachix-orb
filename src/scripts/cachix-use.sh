@@ -1,6 +1,8 @@
 cachix_use() {
-    echo "${PARAM_NAME}"
-    echo "${PARAM_EXTRA_NAMES}"
+    echo "${PARAM_CACHE}"
+    for extra_cache_name in ${EXTRA_CACHES}; do
+        echo "${extra_cache_name}"
+    done
 }
 
 ORB_TEST_ENV="bats-core"
