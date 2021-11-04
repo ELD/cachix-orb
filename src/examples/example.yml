@@ -1,5 +1,8 @@
 description: >
-  Sample example description.
+  Sample usage of the Cachix orb.
+
+  This workflow sets up the Cachix cache and then run a nix flake check before
+  uploading the results of the binary cache to the Cachix cache.
 # Provide a use-case based example for using this orb.
 # Everything in the `usage` section will be displayed in the orb registry.
 # Comments are not retained.
