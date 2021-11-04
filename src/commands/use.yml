@@ -20,5 +20,4 @@ steps:
         PARAM_NAME: <<parameters.cache_name>>
         PARAM_EXTRA_NAMES: <<parameters.extra_cache_names>>
       name: "Use Cachix cache"
-      command: |
-        <<include(scripts/cachix-use.sh)>>
+      command: <<include(scripts/cachix-use.sh)>>
