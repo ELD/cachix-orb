@@ -1,14 +1,19 @@
 version: 2.1
 
 description: >
-  Sample orb description
+  This Orb is designed to help with interacting with Cachix binary caches.
+
+  For those that use the nix package system, Cachix is the go-to for remote
+  binary caches. This orb allows you to configure the Cachix binary to use your
+  remote binary cache (or any other valid binary cache) as well as tools to upload
+  new artifacts after a nix build.
 # What will your orb allow users to accomplish?
 # Descriptions should be short, simple, and informative.
 
 # This information will be displayed in the orb registry and is not mandatory.
 display:
-  home_url: "https://www.website.com/docs"
-  source_url: "https://www.github.com/EXAMPLE_ORG/EXAMPLE_PROJECT"
+  home_url: "https://github.com/ELD/cachix-orb"
+  source_url: "https://github.com/ELD/cachix-orb"
 
 # If your orb requires other orbs, you can import them like this. Otherwise remove the "orbs" stanza.
 # orbs:
