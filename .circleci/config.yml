@@ -4,6 +4,15 @@ orbs:
   orb-tools: circleci/orb-tools@11.1
   shellcheck: circleci/shellcheck@3.1
 
+executors:
+  linux:
+    docker:
+      - image: nixpkgs/nix:latest
+
+  macos:
+    macos:
+      xcode: 13.3.0
+
 workflows:
   lint-pack:
     jobs:
@@ -11,6 +20,17 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - build-scripts:
+          matrix:
+            parameters:
+              os: [linux, macos]
+          filters:
+            tags:
+              only: /.*/
+      # - copy-scripts:
+      #     filters:
+      #       tags:
+      #         only: /.*/
       - orb-tools/lint:
           filters:
             tags:
@@ -65,3 +85,28 @@ jobs:
       - run:
           name: "Test xshell scripts"
           command: cargo test
+
+  build-scripts:
+    parameters:
+      os:
+        description: "An array of executors to run the job against"
+        type: executor
+        default: linux
+    executor: << parameters.os >>
+    steps:
+      - checkout
+      - run:
+          name: "Add Default Channel"
+          command: |
+            mkdir -p /etc/nix /root
+            echo "sandbox = false" >> /etc/nix/nix.conf
+            nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
+            nix-channel --update
+      - run:
+          name: "Install Rust"
+          command: |
+            nix-env -iA nixpkgs.rustup nixpkgs.gcc
+            rustup install stable
+      - run:
+          name: "Build xshell scripts"
+          command: cargo build --release

@@ -3,16 +3,20 @@ fn main() -> Result<(), anyhow::Error> {
     let sh = Shell::new()?;
 
     cachix_install(&sh)?;
-
     check_cachix(&sh)?;
 
     Ok(())
 }
 
 fn cachix_install(sh: &Shell) -> Result<(), anyhow::Error> {
+    // Return if Cachix is already installed
+    if cmd!(sh, "cachix --version").run().is_ok() {
+        return Ok(());
+    }
+
     cmd!(
         sh,
-        "nix-env -iA cachix -f https://cachix.org/api/v1/install"
+        "nix-env --quiet -j8 -iA cachix -f https://cachix.org/api/v1/installl"
     )
     .run()?;
 
